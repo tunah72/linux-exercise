@@ -1,0 +1,84 @@
+\section{Quản lý quyền truy cập (Permissions)}
+
+\subsection{Bài tập 1: Thay đổi quyền bằng ký hiệu (Symbolic mode)}
+
+\textbf{Cách thực hiện:}
+Tạo tập tin \texttt{practice.txt}. Thiết lập quyền cho chủ sở hữu (đọc, ghi), nhóm (đọc) và người dùng khác (đọc). Sau đó thay đổi quyền để tất cả chỉ có quyền đọc.
+
+\begin{lstlisting}[language=bash]
+# Tao file
+touch practice.txt
+
+# Thiet lap quyen doc, ghi cho user va doc cho group/others
+chmod u=rw,g=r,o=r practice.txt
+ls -al | grep practice.txt
+
+# Doi quyen tat ca thanh chi doc
+chmod u=r practice.txt
+ls -al | grep practice.txt
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Quyền của tập tin được thay đổi đúng với các thông số \texttt{-rw-r--r--} và \texttt{-r--r--r--}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{02/practice-rw-r-r.png}
+        \caption{Quyền \texttt{-rw-r--r--}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{02/practice-readonly.png}
+        \caption{Quyền \texttt{-r--r--r--}}
+    \end{subfigure}
+    \caption{Kết quả Bài tập 1: Symbolic mode}
+\end{figure}
+
+\subsection{Bài tập 2: Thay đổi quyền bằng số (Numeric mode)}
+
+\textbf{Cách thực hiện:}
+Tạo script \texttt{hello.sh} in ra "hello". Cấp quyền thực thi bằng numeric mode (744) và chạy thử.
+
+\begin{lstlisting}[language=bash]
+# Tao script hello.sh
+cat <<EOF > hello.sh
+#!/bin/bash
+echo 'hello'
+EOF
+
+# Cap quyen 744 (rwxr--r--)
+chmod 744 hello.sh
+ls -al | grep hello.sh
+
+# Thuc thi script
+./hello.sh
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Tập tin script được cấp quyền thực thi thành công cho owner (\texttt{-rwxr--r--}) và in ra chuỗi "hello" khi chạy.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{02/hello-sh-content.png}
+        \caption{Nội dung script}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{02/hello-sh-permission-744.png}
+        \caption{Kiểm tra quyền 744}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{02/hello-sh-executed.png}
+        \caption{Kết quả thực thi}
+    \end{subfigure}
+    \caption{Kết quả Bài tập 2: Numeric mode}
+\end{figure}

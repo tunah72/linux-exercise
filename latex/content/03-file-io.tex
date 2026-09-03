@@ -1,0 +1,159 @@
+\section{Quản lý Xuất Nhập File (File IO)}
+
+\subsection{Tạo, Xem và Thêm nội dung vào File}
+
+\textbf{Cách thực hiện:}
+Sử dụng toán tử redirect (\texttt{>}) để tạo file \texttt{myfile.txt} chứa nội dung "Hello, Linux!" và xem nội dung bằng \texttt{cat}. Tiếp tục dùng toán tử append (\texttt{>>}) để thêm dòng mới mà không làm mất dữ liệu cũ.
+
+\begin{lstlisting}[language=bash]
+# Tao file va xem
+echo "Hello, Linux!" > myfile.txt
+cat myfile.txt
+
+# Them noi dung va xem lai
+echo "Welcome to Linux file management." >> myfile.txt
+cat myfile.txt
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Tập tin được tạo và thêm nội dung thành công, các toán tử redirect hoạt động đúng như lý thuyết.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/create-myfile.png}
+        \caption{Tạo file myfile.txt}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/append-myfile.png}
+        \caption{Thêm nội dung (Append)}
+    \end{subfigure}
+    \caption{Thao tác cơ bản với File}
+\end{figure}
+
+\subsection{Đếm số dòng và từ}
+
+\textbf{Cách thực hiện:}
+Sử dụng lệnh \texttt{wc} (word count) với tùy chọn \texttt{-l} để đếm số dòng và \texttt{-w} để đếm số từ trong tập tin \texttt{myfile.txt}.
+
+\begin{lstlisting}[language=bash]
+wc -l myfile.txt
+wc -w myfile.txt
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Hệ thống đếm chính xác số lượng dòng (2 dòng) và số lượng từ.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/wc-lines.png}
+        \caption{Đếm số dòng}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/wc-words.png}
+        \caption{Đếm số từ}
+    \end{subfigure}
+    \caption{Lệnh đếm dòng và từ}
+\end{figure}
+
+\subsection{Sao chép, Di chuyển và Xóa File}
+
+\textbf{Cách thực hiện:}
+Tiến hành sao chép \texttt{myfile.txt} thành \texttt{myfile\_backup.txt}, sau đó di chuyển bản backup vào thư mục \texttt{/tmp/}. Cuối cùng, xóa bỏ file gốc \texttt{myfile.txt}.
+
+\begin{lstlisting}[language=bash]
+# Sao chep
+cp myfile.txt myfile_backup.txt
+
+# Di chuyen
+mv myfile_backup.txt /tmp/
+
+# Xoa file
+rm myfile.txt
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Các lệnh thao tác tập tin hoạt động chính xác. File gốc được xóa và bản backup nằm an toàn trong \texttt{/tmp/}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/cp-myfile-backup.png}
+        \caption{Sao chép file}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/mv-to-tmp.png}
+        \caption{Di chuyển file sang /tmp}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/rm-myfile.png}
+        \caption{Xóa file gốc}
+    \end{subfigure}
+    \caption{Thao tác quản lý File nâng cao}
+\end{figure}
+
+\subsection{Tìm kiếm, Đổi tên và Xem từng phần}
+
+\textbf{Cách thực hiện:}
+- Dùng \texttt{grep} để tìm kiếm chuỗi "Linux" trong file backup.
+- Dùng \texttt{mv} để đổi tên file thành \texttt{linuxfile.txt}.
+- Tạo thư mục \texttt{backup} và di chuyển file vào trong.
+- Dùng \texttt{less} để xem nội dung file.
+
+\begin{lstlisting}[language=bash]
+# Tim kiem
+grep "Linux" /tmp/myfile_backup.txt
+
+# Doi ten va tao thu muc
+mv /tmp/myfile_backup.txt /tmp/linuxfile.txt
+mkdir backup
+mv /tmp/linuxfile.txt backup/
+
+# Xem noi dung tung trang
+less backup/linuxfile.txt
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Công cụ \texttt{grep} tìm được đúng dòng chứa từ khóa. \texttt{mv} và \texttt{mkdir} tạo cấu trúc thư mục thành công.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/grep-linux.png}
+        \caption{Tìm kiếm với grep}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/rename-linuxfile.png}
+        \caption{Đổi tên file}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/mkdir-backup-mv.png}
+        \caption{Tạo thư mục và di chuyển}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03/less-linuxfile.png}
+        \caption{Xem file bằng less}
+    \end{subfigure}
+    \caption{Các công cụ tìm kiếm và điều hướng}
+\end{figure}

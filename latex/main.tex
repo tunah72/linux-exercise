@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+
+\usepackage{hcmus-report-template}
+\usepackage{subcaption}
+
+% Disable indentation on new paragraphs
+\setlength{\parindent}{0pt}
+
+% Line spacing 1.5
+\renewcommand{\baselinestretch}{1.5}
+
+% Graphic path
+\graphicspath{{img/}}
+
+% Define course name, report name and report title.
+\newcommand{\coursename}{Nhập môn DevOps}
+\newcommand{\reportname}{Báo cáo Bài tập Thực hành Linux}
+\newcommand{\reporttitle}{Báo cáo Thực hành Linux}
+
+\newcommand{\studentname}{%
+  Dương Tuấn Anh (23120208)%
+}
+\newcommand{\teachername}{Giáo viên hướng dẫn}
+
+% Header
+\lhead{\reporttitle}
+\rhead{%
+  Trường Đại học Khoa học Tự nhiên - ĐHQG HCM\\%
+  \coursename%
+}
+
+% Footer
+\newcommand{\leftfooter}{MSSV: 23120208}
+\lfoot{\leftfooter}
+
+% ============ DOCUMENT ============
+\begin{document}
+
+\pagenumbering{roman}
+\input{content/title.tex}
+
+\tableofcontents
+\pagebreak
+\listoffigures
+\pagebreak
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{content/01-user-group.tex}
+\input{content/02-permission.tex}
+\input{content/03-file-io.tex}
+\input{content/04-package-management.tex}
+\input{content/05-service-management.tex}
+\input{content/06-bash-script.tex}
+
+\end{document}

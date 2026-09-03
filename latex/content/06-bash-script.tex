@@ -1,0 +1,166 @@
+\section{Quản lý tác vụ tự động bằng Bash Script}
+
+\subsection{Cơ bản về Script: In nội dung, Biến và Tính toán}
+
+\textbf{Cách thực hiện:}
+Tạo các script cơ bản để làm quen với Bash:
+- \texttt{hello.sh}: In ra chuỗi "Hello World".
+- \texttt{current\_time.sh}: Lấy kết quả từ lệnh \texttt{date} và in ra ngày giờ hệ thống.
+- \texttt{sum.sh}: Sử dụng lệnh \texttt{read} để nhận đầu vào từ bàn phím và tính tổng 2 số.
+
+\begin{lstlisting}[language=bash]
+# Cap quyen va chay cac script da tao
+chmod +x hello.sh current_time.sh sum.sh
+./hello.sh
+./current_time.sh
+./sum.sh
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Các script chạy ổn định, tiếp nhận được Input từ người dùng và xử lý các câu lệnh command line lồng ghép chính xác.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/hello-world-script.png}
+        \caption{In Hello World}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/current-time-script.png}
+        \caption{In ngày giờ hệ thống}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/sum-script.png}
+        \caption{Tính tổng 2 số}
+    \end{subfigure}
+    \caption{Các thao tác cơ bản trong Bash Script}
+\end{figure}
+
+\subsection{Lệnh điều kiện và Vòng lặp}
+
+\textbf{Cách thực hiện:}
+- \texttt{check\_file.sh}: Nhận tên file, dùng \texttt{if [ -f ]} để kiểm tra sự tồn tại.
+- \texttt{list\_files.sh}: Chạy lệnh \texttt{ls -la} trong script.
+- \texttt{loop\_numbers.sh} \& \texttt{100.sh}: Dùng vòng lặp \texttt{for i in \{1..10\}} để in số.
+
+\begin{lstlisting}[language=bash]
+# Chay thu script kiem tra ton tai
+./check_file.sh
+
+# Chay thu vong lap in so tu 1 den 100
+./loop_numbers_100.sh
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Hệ thống rẽ nhánh luồng xử lý tùy theo file có tồn tại hay không. Vòng lặp for hoạt động trơn tru từ 1 đến 100.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/check-file-script.png}
+        \caption{Kiểm tra sự tồn tại của file}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/list-files-script.png}
+        \caption{Script liệt kê file}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/loop-1-to-10.png}
+        \caption{Vòng lặp 1-10}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/loop-1-to-100.png}
+        \caption{Vòng lặp 1-100}
+    \end{subfigure}
+    \caption{Điều khiển luồng trong Bash}
+\end{figure}
+
+\subsection{Xử lý File nâng cao (Đếm dòng, Backup tự động)}
+
+\textbf{Cách thực hiện:}
+- \texttt{count\_lines.sh}: Sử dụng lệnh \texttt{wc -l} trong kịch bản để đếm số dòng của file chỉ định.
+- \texttt{backup\_file.sh}: Sao lưu file thành bản sao mới có gắn nhãn thời gian hiện tại (\texttt{\%Y\%m\%d\_\%H\%M\%S}).
+
+\begin{lstlisting}[language=bash]
+./count_lines.sh
+./backup_file.sh
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Tạo bản sao lưu không lo trùng tên nhờ tích hợp biến ngày giờ hệ thống động.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/count-lines-script.png}
+        \caption{Script đếm số dòng file}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/backup-file-script.png}
+        \caption{Backup với định dạng datetime}
+    \end{subfigure}
+    \caption{Ứng dụng xử lý file bằng Script}
+\end{figure}
+
+\subsection{Tự động hóa với Crontab}
+
+\textbf{Cách thực hiện:}
+Lập lịch tự động chạy hai tác vụ bằng Cron:
+1. Ghi log mỗi 2 phút bằng \texttt{*/2 * * * *}.
+2. Sao lưu toàn bộ thư mục \texttt{\textasciitilde/myfolder} vào lúc 2h sáng mỗi ngày bằng \texttt{0 2 * * *}.
+
+\begin{lstlisting}[language=bash]
+crontab -e
+crontab -l
+# Doi sau vai phut va doc log ghi ra
+cat ~/output.log
+ls -la ~/backup/
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Hai cronjob đã được thêm vào hệ thống và hoạt động đúng giờ. Dữ liệu được ghi vào \texttt{output.log} tuần tự và thư mục backup được tạo tự động.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/crontab-setup.png}
+        \caption{Thiết lập crontab cho log}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/output-log-check.png}
+        \caption{Log sinh ra tự động}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/backup-folder-result.png}
+        \caption{Thư mục được backup}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{07/crontab-all-jobs.png}
+        \caption{Các cronjob đang chạy}
+    \end{subfigure}
+    \caption{Lập lịch tự động Cronjob}
+\end{figure}

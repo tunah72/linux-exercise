@@ -1,0 +1,96 @@
+\section{User \& Group}
+
+\subsection{Bài tập 1: Tạo và quản lý user}
+
+\textbf{Cách thực hiện:}
+Tạo các user \texttt{peter}, \texttt{alice}, \texttt{bob} kèm thư mục home và shell tương ứng, sau đó đặt mật khẩu. Đổi tên user \texttt{bob} thành \texttt{bigman} và di chuyển thư mục home. Xóa user \texttt{alice} cùng thư mục home.
+
+\begin{lstlisting}[language=bash]
+# Tao user va dat mat khau
+sudo useradd -m -s /bin/bash peter
+sudo useradd -m -s /bin/bash alice
+sudo passwd peter
+sudo passwd alice
+
+# Tao user bob voi home rieng va shell /bin/sh
+sudo useradd -m -d /home/bob_dir -s /bin/sh bob
+sudo passwd bob
+
+# Doi ten bob thanh bigman
+sudo usermod -l bigman bob -m -d /home/bigman_dir
+
+# Xoa user alice
+sudo userdel -r alice
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Các user được tạo, sửa và xóa thành công, phản ánh đúng trong tập tin \texttt{/etc/passwd} và thư mục \texttt{/home/}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{01/list-users-created.png}
+        \caption{Danh sách 3 user đã tạo}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{01/user-bigman-renamed.png}
+        \caption{User bigman với home directory mới}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{01/user-alice-deleted.png}
+        \caption{Xác nhận alice đã bị xóa}
+    \end{subfigure}
+    \caption{Kết quả Bài tập 1: Quản lý user}
+\end{figure}
+
+
+\subsection{Bài tập 2: Tạo và quản lý group}
+
+\textbf{Cách thực hiện:}
+Tạo group \texttt{tech} và thêm \texttt{peter}, \texttt{bigman}. Tạo group \texttt{marketing} và thêm \texttt{bigman}. Cuối cùng xóa group \texttt{marketing}.
+
+\begin{lstlisting}[language=bash]
+# Tao group tech va them thanh vien
+sudo groupadd tech
+sudo usermod -aG tech peter
+sudo usermod -aG tech bigman
+
+# Tao group marketing va them bigman
+sudo groupadd marketing
+sudo usermod -aG marketing bigman
+
+# Xoa group marketing
+sudo groupdel marketing
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Thành viên được cấp group đúng như chỉ định và group \texttt{marketing} đã được gỡ bỏ thành công khỏi hệ thống.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{01/group-tech-members.png}
+        \caption{peter và bigman thuộc group tech}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{01/group-marketing-added.png}
+        \caption{bigman thuộc group marketing}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{01/group-marketing-deleted.png}
+        \caption{Xác nhận group marketing đã bị xóa}
+    \end{subfigure}
+    \caption{Kết quả Bài tập 2: Quản lý group}
+\end{figure}

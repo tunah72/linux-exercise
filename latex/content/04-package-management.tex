@@ -1,0 +1,123 @@
+\section{Quản lý Gói Phần mềm (Package Management)}
+
+\subsection{Cập nhật và Cài đặt gói phần mềm}
+
+\textbf{Cách thực hiện:}
+Tiến hành cập nhật danh sách các gói phần mềm trên hệ thống với lệnh \texttt{update}, sau đó cài đặt dịch vụ \texttt{vsftpd}.
+
+\begin{lstlisting}[language=bash]
+# Cap nhat danh sach
+sudo apt update
+
+# Cai dat vsftpd
+sudo apt install vsftpd -y
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Hệ thống lấy danh sách thành công và tự động tải về, cài đặt gói \texttt{vsftpd}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-update.png}
+        \caption{Cập nhật APT}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-install-vsftpd.png}
+        \caption{Cài đặt vsftpd}
+    \end{subfigure}
+    \caption{Cập nhật và cài đặt phần mềm}
+\end{figure}
+
+\subsection{Tìm kiếm, Xem chi tiết và Gỡ bỏ}
+
+\textbf{Cách thực hiện:}
+- Tìm kiếm từ khóa \texttt{net-tools} trong kho lưu trữ.
+- Hiển thị thông tin chi tiết về gói \texttt{vsftpd} vừa cài.
+- Thực hiện lệnh xóa hoàn toàn \texttt{vsftpd} khỏi hệ thống.
+
+\begin{lstlisting}[language=bash]
+apt search net-tools
+apt show vsftpd
+sudo apt remove vsftpd -y
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Các lệnh trả về chính xác kết quả tìm kiếm và thông tin package. Lệnh \texttt{remove} gỡ bỏ thành công.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-search-nettools.png}
+        \caption{Tìm kiếm net-tools}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-show-vsftpd.png}
+        \caption{Xem chi tiết vsftpd}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-remove-vsftpd.png}
+        \caption{Gỡ bỏ vsftpd}
+    \end{subfigure}
+    \caption{Tra cứu và Gỡ cài đặt}
+\end{figure}
+
+\subsection{Quản lý Dependency và Xử lý sự cố}
+
+\textbf{Cách thực hiện:}
+- Liệt kê các gói liên quan tới \texttt{python} đã cài trên máy.
+- Xem danh sách các gói phụ thuộc (dependencies) của \texttt{vim}.
+- Sử dụng \texttt{--fix-broken install} để sửa lỗi package và \texttt{autoremove} để dọn dẹp hệ thống.
+
+\begin{lstlisting}[language=bash]
+# Liet ke goi python
+dpkg -l | grep python
+
+# Xem phu thuoc cua vim
+apt depends vim
+
+# Sua loi va don dep
+sudo apt --fix-broken install
+sudo apt autoremove -y
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Quản lý hiệu quả được danh sách các package đã cài và giải phóng không gian ổ cứng an toàn.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/dpkg-grep-python.png}
+        \caption{Liệt kê gói cài đặt}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-depends-vim.png}
+        \caption{Phụ thuộc của vim}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-fix-broken.png}
+        \caption{Sửa lỗi package}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{04/apt-autoremove.png}
+        \caption{Lệnh dọn dẹp autoremove}
+    \end{subfigure}
+    \caption{Bảo trì hệ thống Package}
+\end{figure}

@@ -1,0 +1,129 @@
+\section{Quản lý Dịch vụ (Service Management)}
+
+\subsection{Cài đặt và Quản lý Trạng thái Nginx}
+
+\textbf{Cách thực hiện:}
+Cài đặt \texttt{nginx}. Sau đó, sử dụng lệnh \texttt{systemctl} để lần lượt kiểm tra trạng thái, khởi động và dừng dịch vụ web server này.
+
+\begin{lstlisting}[language=bash]
+# Cai dat nginx
+sudo apt install nginx -y
+
+# Xem trang thai, khoi dong, dung dich vu
+sudo systemctl status nginx
+sudo systemctl start nginx
+sudo systemctl stop nginx
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Dịch vụ được cài đặt thành công, chuyển đổi trạng thái giữa \texttt{active (running)} và \texttt{inactive (dead)} ổn định qua \texttt{systemctl}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/install-nginx.png}
+        \caption{Cài đặt nginx}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-status-initial.png}
+        \caption{Trạng thái ban đầu}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-started.png}
+        \caption{Nginx active}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-stopped.png}
+        \caption{Nginx inactive}
+    \end{subfigure}
+    \caption{Quản lý trạng thái service}
+\end{figure}
+
+\subsection{Cấu hình Khởi động cùng hệ thống}
+
+\textbf{Cách thực hiện:}
+Tắt và bật tính năng tự động khởi động cùng hệ thống của Nginx. Kiểm tra lại bằng cờ \texttt{is-enabled}.
+
+\begin{lstlisting}[language=bash]
+sudo systemctl disable nginx
+systemctl is-enabled nginx
+
+sudo systemctl enable nginx
+systemctl is-enabled nginx
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Trạng thái hiển thị \texttt{disabled} rồi chuyển thành \texttt{enabled}, xác nhận Nginx sẽ tự boot khi khởi động máy.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-disabled.png}
+        \caption{Disable Nginx}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-enabled.png}
+        \caption{Enable Nginx}
+    \end{subfigure}
+    \caption{Cấu hình Autostart}
+\end{figure}
+
+\subsection{Kiểm tra và Theo dõi File Log}
+
+\textbf{Cách thực hiện:}
+- Dùng \texttt{curl} truy cập \texttt{localhost} để tạo request thành công. Đọc file \texttt{access.log}.
+- Đọc file \texttt{error.log} để xem lỗi.
+- Chạy \texttt{tail -f} để xem log lỗi theo thời gian thực (realtime) khi gửi request sai.
+
+\begin{lstlisting}[language=bash]
+# Tao request va xem access log
+curl http://localhost
+sudo cat /var/log/nginx/access.log
+
+# Xem error log va tail realtime
+sudo cat /var/log/nginx/error.log
+sudo tail -f /var/log/nginx/error.log
+\end{lstlisting}
+
+\textbf{Kết quả:}
+Hệ thống ghi nhận chính xác các truy cập (mã 200) và các lỗi truy cập trang không tồn tại (mã 404). Lệnh \texttt{tail -f} giúp giám sát server hiệu quả.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/curl-localhost.png}
+        \caption{Curl trang chủ}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-access-log.png}
+        \caption{Access log ghi nhận truy cập}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-error-log.png}
+        \caption{File Error log}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{05/nginx-tail-realtime.png}
+        \caption{Theo dõi Error log realtime}
+    \end{subfigure}
+    \caption{Quản lý và giám sát File Log}
+\end{figure}
